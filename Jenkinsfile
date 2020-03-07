@@ -13,6 +13,11 @@ pipeline {
         sh "mvn verify -s src/main/config/settings.xml"
       }
     }
+	stage('Code Analysis') {
+	  steps {
+		sh "mvn -s src/main/config/settings.xml sonar:sonar -Dsonar.host.url=http://sonarqube.devops.svc:9000 -Dmaven.test.skip=true"
+	  }
+	}
     stage('Build Image') {
       steps {
         script {
